@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Tangy.Models;
 
 namespace Tangy.Data
 {
@@ -12,5 +13,6 @@ namespace Tangy.Data
             : base(options)
         {
         }
+        public DbSet<category> categories { get; set; }
     }
 }
