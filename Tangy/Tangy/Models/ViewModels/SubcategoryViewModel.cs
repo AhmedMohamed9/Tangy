@@ -10,9 +10,11 @@ namespace Tangy.Models.ViewModels
     {
         public SubCategory subCategory { get; set; }
 
-        public IEnumerable<category> categorieslist { get; set; }
+        //public int categoryid { get; set; }
 
-        public List<string> subcategory { get; set; }
+        public List<category> categorieslist { get; set; }
+
+        public List<string> subcategorylist { get; set; }
 
         [Display(Name ="New Sub Category")]
         public bool isnew { get; set; }
