@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace Tangy.Models.ViewModels
 
         public List<category> categorylist { get; set; }
         public List<SubCategory>  Subcategorylist { get; set; }
+
+        public IFormFile File { get; set; }
 
     }
 }

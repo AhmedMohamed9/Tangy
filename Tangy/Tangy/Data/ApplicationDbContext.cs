@@ -15,5 +15,6 @@ namespace Tangy.Data
         }
         public DbSet<category> categories { get; set; }
         public  DbSet<SubCategory> subCategories { get; set; }
+        public DbSet<Menuitem> menuitems { get; set; }
     }
 }

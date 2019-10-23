@@ -33,6 +33,6 @@ namespace Tangy.Models
         public int subcategoryid { get; set; }
 
         [ForeignKey("subcategoryid")]
-        public virtual category subcategory { get; set; }
+        public virtual SubCategory subcategory { get; set; }
     }
 }

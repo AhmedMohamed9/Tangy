@@ -1,0 +1,125 @@
+﻿@model Tangy.Models.ViewModels.Menuitem_ViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2 class="text-info">Edit Menue Item</h2>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        getsubcategory();
+        $('#categoryid').change(function () {
+         getsubcategory();
+
+        })
+    });
+    function getsubcategory() {
+        var url = '@Url.Content("~/")' + "Menuitem/getsubcategory";
+        var ddlid = "#categoryid";
+        $.getJSON(url, { categoryid: $(ddlid).val() }, function (data) {
+            var items = '';
+            $("#subcategoryid").empty();
+            $.each(data, function (i, subcategory) {
+             items += "<option value='" + subcategory.value + "'>" + subcategory.text + "</option>"
+            });
+            $("#subcategoryid").html(items);
+        })
+    }
+</script>
+<br />
+<br />
+<form method="post" asp-action="edit" enctype="multipart/form-data">
+    <input asp-for="menuitem.image" />
+
+    <div class="form-border row">
+        <input type="hidden" asp-for="menuitem.id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="menuitem.name" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="menuitem.name" autocomplete="off" class="form-control" />
+                </div>
+                <span asp-validation-for="menuitem.name" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="menuitem.description" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="menuitem.description" class="form-control" />
+                </div>
+                <span asp-validation-for="menuitem.description" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="menuitem.Price" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="menuitem.Price" class="form-control" />
+                </div>
+                <span asp-validation-for="menuitem.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="menuitem.image" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <input type="file" name="file" asp-for="File" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="menuitem.categoryid" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <select class="form-control" name="categoryid" id="categoryid" onchange="populate('categoryid','subcategoryid')" asp-for="menuitem.categoryid"
+                            asp-items="@(new SelectList(Model.categorylist,"id","name"))"></select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="menuitem.subcategoryid" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="menuitem.subcategoryid" name="subcategoryid" id="subcategoryid" class="form-control"
+                            asp-items="@(new SelectList(string.Empty,"id","name"))"></select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="menuitem.spiceness" class="custom-label"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="menuitem.spiceness" class="form-control"
+                            asp-items="Html.GetEnumSelectList<Menuitem.Espice>()"></select>
+                </div>
+            </div>
+
+        </div>
+        <div class=" col-3">
+            <img src="~/images/@Model.menuitem.image" style="width:100%; border-radius:5px;border:1px solid #bbb9b9;" />
+        </div>
+        <br />
+    </div>
+    <div class="form-group row">
+        <div class="col-5">
+            <input type="submit" class="btn btn-primary" value="Update" />
+            <a asp-action="index" class="btn btn-success">Back To List</a>
+        </div>
+    </div>
+</form>
+<br />
+<br />
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
